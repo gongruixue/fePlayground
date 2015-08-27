@@ -1,0 +1,27 @@
+tr.productRow .unstocked{
+    color: red;
+}
+.productTable, .productRow, .categoryRow {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+.productTable td {
+    padding: 4px 6px;
+    text-align: left;
+    border: 1px solid black;
+}
+
+
+.searchBar {
+    padding: 20px 0;
+}
+
+.searchBar .searchInput {
+    margin-bottom: 10px;
+    width: 194px;
+}
+
+.productTable {
+    width: 200px;
+}

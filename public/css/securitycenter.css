@@ -1,0 +1,56 @@
+body{
+    margin:0;
+}
+#mock-header li,#mock-header ul {
+    list-style: none;
+}
+
+#mock-header .top-list {
+    margin: 0 170px;
+    height: 28px;
+    line-height: 28px;
+}
+
+#mock-header .top-left-item {
+    float: left;
+    margin-right: 30px;
+}
+
+.clearfix:after {
+    content: "";
+    clear: both;
+}
+
+#mock-header {
+    background-color: #1e1b29;
+    width: 100%;
+    height: 28px;
+    color: #fff;
+    font-family: tahoma, arial, 'Hiragino Sans GB', 'Microsoft Yahei', 宋体;
+    font-size:12px;
+}
+
+li.top-right-item {
+    float: right;
+}
+
+li.top-right-gap {
+    margin: 0 10px;
+}
+.toggle-dropdown {
+    /* background: url("https://i.alipayobjects.com/i/localhost/png/201406/2m8aALTLuf.png") no-repeat right -1752px; */
+}
+#mock-header .top-list li, #mock-header .top-list a {
+    color: #fff;
+    -webkit-font-smoothing: antialiased;
+}
+#mock-header a, #mock-header a:hover{
+    text-decoration: none;
+}
+
+.top-right-item.toggle-dropdown em{
+    border-width: 5px 5px 0;
+    border-style: solid dashed dashed dashed;
+    border-color: #a5a4a9 transparent transparent transparent;
+    display: inline-block;
+}

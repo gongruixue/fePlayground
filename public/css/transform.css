@@ -1,0 +1,35 @@
+.box{
+    display:block;
+    width:100px;
+    height:100px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+}
+.box.origin{
+    background-color: grey;
+}
+.box.rotate{
+    background-color: green;
+/*     -webkit-transform: rotate(40deg); */
+    -moz-transform: rotate(40deg);
+    -ms-transform: rotate(40deg);
+    -o-transform: rotate(40deg);
+/*     transform: rotate(40deg); */
+}
+.canvas{
+    width: 100px;
+    margin:50px auto;
+}
+.box.rotate:hover{
+    animation:rotate 1s linear infinite;
+}
+
+@keyframes rotate{
+    0%{
+        transform:rotate(0deg);
+    }
+    100%{
+        transfomr:rotate(360deg);
+    }
+}
