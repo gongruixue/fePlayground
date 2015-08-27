@@ -1,0 +1,64 @@
+{% extends './layout/reactLayout.html' %}
+
+{% block addCSS %}
+    <link href="/css/checkbox.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<p>hello {{name}}</p>
+<script type="text/jsx">
+
+    var MyCheckbox=React.createClass({
+        handleCheck:function(){
+            this.props.handleCheck(this.props.index);
+        },
+        render:function(){
+            return(
+                    <li onClick={this.handleCheck} id='myCheckbox'>
+                        <span className="checkbox-square">{this.props.checked&&'√'}</span>
+                        &nbsp;{this.props.name}
+                    </li>
+            );
+        }
+    });
+
+    var MyChoices=React.createClass({
+        getInitialState:function(){
+            var checked=[];
+            for(var i=0;i<this.props.items.length;i++){
+                checked.push(false);
+            }
+            return {checked:checked};
+        },
+        handleCheck:function(index){
+            var checked=this.state.checked;
+            checked[index]=!checked[index];
+            this.setState({checked:checked});
+        },
+        getChecked:function(){
+            var str='';
+            for(var i=0;i<this.props.items.length;i++){
+                this.state.checked[i] && (str+=this.props.items[i]+",");
+            }
+            str=str.substring(0,str.length-1)+".";
+            return str;
+        },
+        render:function(){
+            var self=this;
+            var options=this.props.items.map(function(item,index){
+                return <MyCheckbox name={item} index={index} checked={self.state.checked[index]} handleCheck={self.handleCheck} />
+            });
+            return (
+                    <ul>
+                        {options}
+                        <p><br />{"You have chosen: "+this.getChecked()} </p>
+                    </ul>
+            );
+        }
+    });
+
+    //React.render(<MyCheckbox name="alibaba" />,mountNode);
+
+    React.render(<MyChoices items={['apple','banana','pear','peach','grapes']} />,document.body);
+</script>
+{% endblock %}

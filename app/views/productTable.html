@@ -1,0 +1,97 @@
+{% extends './layout/reactLayout.html' %}
+
+{% block addCSS %}
+<link href="/css/productTable.css" rel="stylesheet">
+{% endblock %}
+
+{% block body %}
+<script type="text/jsx">
+    var ProductCategoryRow = React.createClass({
+        render: function() {
+            return (<tr className="categoryRow"><th colSpan="2">{this.props.category}</th></tr>);
+        }
+    });
+    var ProductRow = React.createClass({
+        render: function() {
+            var nameClass=this.props.product.stocked?"":"unstocked";
+            return (
+                    <tr className="productRow">
+                        <td className={nameClass}>{this.props.product.name}</td>
+                        <td>{this.props.product.price}</td>
+                    </tr>
+            );
+        }
+    });
+    var ProductTable=React.createClass({
+        render:function(){
+            var rows=[],lastCategory=null;
+            this.props.products.map(function(product){
+                var catory=product.category;
+                if(catory!=lastCategory){
+                    rows.push(<ProductCategoryRow category={catory} />);
+                    lastCategory=catory;
+                }
+                rows.push(<ProductRow product={product} />);
+            });
+            return <table className="productTable"><tbody>{rows}</tbody></table>;
+        }
+    });
+
+    var SearchBar=React.createClass({
+        render:function(){
+            return(
+                    <form className="searchBar">
+                        <input onChange={this.handleChange} ref="searchInput" type="text" placeholder="search..." className="searchInput"></input>
+                        <br />
+                        <input onChange={this.handleChange} ref="filterCheckbox" type="checkbox" className="filterCheckbox">Only show products in stock</input>
+                    </form>
+            );
+        },
+        handleChange:function(){
+            var searchInput=this.refs.searchInput.getDOMNode().value,
+                    filterCheckbox=this.refs.filterCheckbox.getDOMNode().checked;
+            this.props.handleInput(searchInput,filterCheckbox);
+
+        }
+    });
+    var FilterableProductTable=React.createClass({
+        render:function(){
+            return(
+                    <div className="filterableTable">
+                        <SearchBar handleInput={this.handleInput} />
+                        <ProductTable products={this.getFilteredProducts()} />
+                    </div>
+            );
+        },
+        handleInput:function(searchInput,filterCheckbox){
+            this.setState({searchInput:searchInput,filterCheckbox:filterCheckbox});
+        },
+        getFilteredProducts:function(){
+            var self=this;
+            var filteredProducts=[];
+            this.props.products.map(function(product){
+                var stocked=self.state.filterCheckbox?product.stocked:true;
+                if(product.name.toLowerCase().indexOf(self.state.searchInput.toLowerCase())!=-1&&stocked){
+                    filteredProducts.push(product);
+                }
+            });
+            return filteredProducts;
+        },
+        getInitialState:function(){
+            return{
+                searchInput:"",
+                filterCheckbox:false
+            }
+        }
+    });
+    var PRODUCTS=[
+        {category: "Sporting Goods", price: "$49.99", stocked: true, name: "Football"},
+        {category: "Sporting Goods", price: "$9.99", stocked: true, name: "Baseball"},
+        {category: "Sporting Goods", price: "$29.99", stocked: false, name: "Basketball"},
+        {category: "Electronics", price: "$99.99", stocked: true, name: "iPod Touch"},
+        {category: "Electronics", price: "$399.99", stocked: false, name: "iPhone 5"},
+        {category: "Electronics", price: "$199.99", stocked: true, name: "Nexus 7"}
+    ];
+    React.render(<FilterableProductTable products={PRODUCTS} />, document.body);
+</script>
+{% endblock %}
